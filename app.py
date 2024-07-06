@@ -7,7 +7,11 @@ from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain_together import Together
+from dotenv import load_dotenv
 
+
+# Load environment variables from .env file into os.environ
+load_dotenv()
 
 # Set the Streamlit page configuration and theme
 st.set_page_config(page_title="BharatLAW", layout="centered")
@@ -15,7 +19,7 @@ st.set_page_config(page_title="BharatLAW", layout="centered")
 # Display the logo image
 col1, col2, col3 = st.columns([1, 30, 1])
 with col2:
-    st.image("https://github.com/Piyush20-11/CrimeCounselor/blob/main/images/banner.jpeg?raw=true", use_column_width=True)
+    st.image("https://github.com/Piyush20-11/CrimeCounselor/blob/main/images/banner.png?raw=true", use_column_width=True)
 
 def hide_hamburger_menu():
     st.markdown("""
@@ -70,7 +74,7 @@ ANSWER:
 prompt = PromptTemplate(template=prompt_template,
                         input_variables=['context', 'question', 'chat_history'])
 
-api_key = os.getenv('TOGETHER_API_KEY')
+api_key = os.getenv('TOGETHER_API')
 llm = Together(model="mistralai/Mixtral-8x22B-Instruct-v0.1", temperature=0.5, max_tokens=1024, together_api_key=api_key)
 
 qa = ConversationalRetrievalChain.from_llm(llm=llm, memory=st.session_state.memory, retriever=db_retriever, combine_docs_chain_kwargs={'prompt': prompt})
