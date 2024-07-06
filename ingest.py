@@ -45,6 +45,7 @@ index_to_docstore_id = {i: i for i in range(len(texts))}
 faiss_db = FAISS(embedding_function, index, docstore, index_to_docstore_id)
 
 
+
 logging.info("Storing embeddings in FAISS...")
 for i, text in enumerate(texts):
     embedding = embedding_function(text)
